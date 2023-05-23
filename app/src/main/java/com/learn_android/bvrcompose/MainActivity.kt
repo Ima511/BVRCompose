@@ -3,7 +3,6 @@ package com.learn_android.bvrcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -21,7 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.graphics.RectangleShape
+
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,30 +36,68 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BVRComposeTheme {
-                FooterBestViewsReviews()
+//                FooterBestViewsReviews()
+                    BvrAppHomePage()
             }
         }
     }
 }
 
 @Composable
+fun BvrAppHomePage(modifier: Modifier = Modifier){
+    Column {
+        BvrTopAppBar()
+        CommissionStatement()
+        CategoryGridOne()
+        CardViewTheme()
+        CategoryGridTwo()
+        FooterBestViewsReviewsPreviews()
+    }
+}
+
+@Composable
 fun FooterBestViewsReviews(modifier: Modifier = Modifier){
     val textColor = colorResource(id = R.color.white_50_per)
+
+
     Column(modifier.background(colorResource(id = R.color.top_app_bar_background))) {
         Row(modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,
-            
         ) {
-            Image(painter = painterResource(id = R.drawable.logo_shape), contentDescription =null )
-            Image(painter = painterResource(id = R.drawable.best_views_reviews), contentDescription ="Best Views Reviews",modifier.padding(start = 6.dp) )
+            Image(
+                painter = painterResource(id = R.drawable.logo_shape),
+                contentDescription =null,
+                modifier.padding(start = 16.dp,top = 24.dp, end = 8.dp),
+                )
+            Image(
+
+                painter = painterResource(id = R.drawable.best_views_reviews),
+                contentDescription ="Best Views Reviews",
+                modifier
+                    .padding(start = 6.dp, top = 26.dp)
+
+                )
         }
-        Divider(modifier
-            .background(colorResource(id = R.color.white_50_per))
-            .fillMaxWidth()
-        )
+
+        Divider(thickness = 2.dp ,
+                color = textColor,
+                modifier = Modifier
+                    .padding(top = 16.dp))
         
-        Text(stringResource(id = R.string.all_right_reserved), color = textColor )
-        Text(stringResource(id = R.string.disclaimer), color = textColor)
+        Text(
+            stringResource(id = R.string.all_right_reserved),
+            color = textColor ,
+            modifier = Modifier
+                .padding(top = 10.dp)
+                .fillMaxWidth()
+                .wrapContentSize(),
+            )
+        Text(
+            stringResource(id = R.string.disclaimer),
+            color = textColor,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = 8.dp, bottom = 24.dp)
+            )
     }
 }
 
@@ -97,6 +135,7 @@ fun CategoryGridTwo(modifier: Modifier = Modifier){
 fun CardViewTheme(modifier: Modifier = Modifier){
     Box(
         modifier
+            .fillMaxWidth()
             .background(
                 brush = Brush
                     .verticalGradient(
@@ -262,7 +301,8 @@ fun BvrToppAppBarPreview(){
 @Preview
 fun CommissionStatement(modifier: Modifier = Modifier) {
     BVRComposeTheme {
-        Surface(color = colorResource(id = R.color.commission_statement_background_color)) {
+        Surface(modifier.fillMaxWidth(),
+            color = colorResource(id = R.color.commission_statement_background_color)) {
             Text(stringResource(id = R.string.commission_statement),
                 modifier.padding(vertical = 8.dp, horizontal = 16.dp))
         }
